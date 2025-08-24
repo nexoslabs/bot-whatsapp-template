@@ -29,7 +29,7 @@ This is a simple and powerful WhatsApp bot built using the [Baileys](https://git
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/whatsapp-bot-baileys.git
+git clone https://github.com/nexoscreator/whatsapp-bot-baileys.git
 cd whatsapp-bot-baileys
 ````
 

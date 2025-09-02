@@ -19,7 +19,7 @@ module.exports = {
   handler: (sock, logger, saveCreds, startBot) => async ({ connection, lastDisconnect, qr }) => {
     if (qr) {
       logger.info("Scan the QR below to login:");
-      logger.info(await QRCode.toString(qr, { type: "terminal", margin: 1, color: true, small: true }));
+      console.info(await QRCode.toString(qr, { type: "terminal", small: true }));
     }
     if (connection === "close") {
       const reasonCode = new Boom(lastDisconnect?.error)?.output?.statusCode;

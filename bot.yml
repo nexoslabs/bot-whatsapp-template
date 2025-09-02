@@ -1,0 +1,21 @@
+
+# =====================
+# WhatsApp Bot Settings
+# =====================
+bot: 
+  name: "Nexos Bot"             # The display name of your bot
+  online: true                  # Should the bot appear online?
+  prefix: ">"                   # Command prefix (e.g., !, >, /)
+  history: false                # Enable/disable chat history
+
+# =====================
+# Logging
+# =====================
+logging:
+  level: info                   # Log level: error, warn, info, debug
+  logToFile: true               # Save logs to file
+
+# =====================
+# Advanced/Experimental
+# =====================
+# Add more config options as needed

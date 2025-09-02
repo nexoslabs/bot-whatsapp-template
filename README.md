@@ -11,7 +11,7 @@ This is a simple and powerful WhatsApp bot built using the [Baileys](https://git
 - 📱 Connects to WhatsApp Web using QR Code
 - ✨ Automatically replies to messages (customizable)
 - 🧠 Simple logic engine (keyword-based)
-- 📤 Send text, images, media
+- 📤 Send text, images, media, polls
 - 🔄 Auto reconnect on disconnect
 
 ---
@@ -42,7 +42,7 @@ npm install
 ### 3. Start the bot
 
 ```bash
-node index.js
+npm start
 ```
 
 ### 4. Scan the QR code
@@ -55,32 +55,11 @@ Open WhatsApp on your phone → Menu → Linked Devices → Scan QR code from te
 
 Right now, the bot handles the following:
 
-* If the user sends `"hi"` or `"Hi"`, it replies with:
+* If the user sends `"!hi"` or `"!Hi"`, it replies with:
 
   > Hello! 👋 I am your bot.
 
-You can modify and extend this behavior in `index.js`.
-
----
-
-## 📸 Media Support (Example)
-
-```js
-await sock.sendMessage(from, {
-  image: { url: 'https://example.com/image.jpg' },
-  caption: 'Here is your image!'
-});
-```
-
----
-
-## 🧠 Want to Add NLP?
-
-You can integrate with:
-
-* OpenAI ChatGPT API
-* Dialogflow
-* Rasa
+You can modify and extend this behavior in `index.js` or commands dir.
 
 ---
 

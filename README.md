@@ -1,4 +1,10 @@
-# 🤖 WhatsApp Bot using Baileys (Unofficial API)
+[![Node.js](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen?style=flat-square&color=cyan)](https://nodejs.org/)
+[![GitHub code](https://img.shields.io/github/languages/code-size/nexoslabs/bot-whatsapp-template.svg?logo=github&style=flat-square&color=cyan)](https://github.com/nexoslabs/bot-whatsapp-template)
+[![GitHub stars](https://img.shields.io/github/stars/nexoslabs/bot-whatsapp-template.svg?logo=github&style=flat-square&color=cyan)](https://github.com/nexoslabs/bot-whatsapp-template)
+[![GitHub issues](https://img.shields.io/github/issues/nexoslabs/bot-whatsapp-template?logo=github&style=flat-square&color=cyan)](https://github.com/nexoslabs/bot-whatsapp-template/issues)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?logo=github&style=flat-square&color=cyan)](./LICENSE)
+
+# WhatsApp Bot (Baileys) 🤖
 
 This is a simple and powerful WhatsApp bot built using the [Baileys](https://github.com/WhiskeySockets/Baileys) library, an unofficial WhatsApp Web API for Node.js. It allows you to automate replies, handle user messages, and create intelligent bot logic.
 
@@ -18,7 +24,7 @@ This is a simple and powerful WhatsApp bot built using the [Baileys](https://git
 
 ## 📦 Requirements
 
-- Node.js v16 or later
+- Node.js v18 or later
 - WhatsApp account (not banned)
 - Terminal/Command prompt
 
@@ -29,9 +35,9 @@ This is a simple and powerful WhatsApp bot built using the [Baileys](https://git
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/nexoscreator/whatsapp-bot-baileys.git
-cd whatsapp-bot-baileys
-````
+git clone https://github.com/nexoslabs/bot-whatsapp-template.git
+cd bot-whatsapp-template
+```
 
 ### 2. Install dependencies
 
@@ -106,11 +112,11 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 ## 📬 Contact & Community
 
 💬 Join us on **Discord**: [Click Here](https://discord.gg/H7pVc9aUK2)  
-🐦 **Follow on Twitter**: [@nexoscreator](https://twitter.com/nexoscreator)  
-📧 **Email**: [contact@nexoscreator.tech](mailto:contact@nexoscreator.tech)
+🐦 **Follow on Twitter**: [@nexoslabs](https://twitter.com/nexoslabs)  
+📧 **Email**: [contact@nexoscreation.tech](mailto:contact@nexoscreation.tech)
 
 If you find this project helpful, please consider **starring ⭐ the repository** or **sponsoring 💖 on GitHub**!
 
 <p align="center">
-  Created with ❤️ by <a href="https://github.com/nexoscreator">@nexoscreator</a>
+  Created with ❤️ by <a href="https://github.com/nexoslabs">@nexoslabs</a>
 </p>

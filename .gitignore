@@ -1,5 +1,15 @@
+# Node
 node_modules
 node_modules/
 
+# Session / auth info (Baileys)
 auth_info
 auth_info/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log

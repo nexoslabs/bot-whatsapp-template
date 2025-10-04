@@ -1,4 +1,3 @@
-
 /**
  * WhatsApp Bot Entry Point
  * Loads config, commands, events, and starts the bot.
@@ -14,17 +13,10 @@ const pino = require("pino");
 const config = require("./utils");
 
 // Logging via pino
-const logDir = path.join(__dirname, "logs");
-if (!fs.existsSync(logDir)) { fs.mkdirSync(logDir); }
-const logFile = path.join(logDir, `${new Date().toISOString().slice(0, 10)}.log`);
-
-const logger = pino(
-  {
+const logger = pino({
     level: config.logging?.level || "info",
     transport: { target: "pino-pretty" }
-  },
-  pino.destination(logFile)
-);
+});
 
 /**
  * Loads all command modules from the commands directory.

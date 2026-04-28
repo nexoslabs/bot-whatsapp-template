@@ -1,26 +1,35 @@
 
-/**
- * Lists all available commands and their descriptions.
+//**
+ * GOJO BOT MENU
  * Usage: !help
  */
 const helpText = `
-Available commands:
-!hi    - Say hello
-!time  - Show current time
-!image - Send an image
-!poll  - Create a poll
-!ping  - Check bot response time
+🔥 GOJO BOT MENU 🔥
+
+🎵 !song       - تحميل أغاني
+🤖 !ai         - الذكاء الاصطناعي
+🎮 !game       - ألعاب
+💍 !marry      - زواج افتراضي
+👮 !admin      - أوامر الإدارة
+🚫 !antilink   - منع الروابط
+👋 !welcome    - ترحيب مع صورة
+😢 !goodbye    - رسالة وداع
+🏓 !ping       - سرعة البوت
+🖼️ !image      - إرسال صورة
+🕒 !time       - الوقت الحالي
+👋 !hi         - ترحيب سريع
+📊 !poll       - استطلاع رأي
+❓ !help       - عرض القائمة
+
+━━━━━━━━━━━━━━━━━━
+🌿 GOJO BOT SYSTEM
+━━━━━━━━━━━━━━━━━━
 `;
 
 module.exports = {
   name: "help",
-  description: "List available commands.",
-  /**
-   * Sends a help message listing all commands.
-   * @param {object} sock - WhatsApp socket instance
-   * @param {string} from - Sender JID
-   * @param {Array} args - Command arguments
-   */
+  description: "GOJO BOT MENU",
+
   execute: async (sock, from, args) => {
     await sock.sendMessage(from, {
       text: helpText,

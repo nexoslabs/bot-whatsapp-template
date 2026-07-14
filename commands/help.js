@@ -3,13 +3,15 @@
  * Lists all available commands and their descriptions.
  * Usage: !help
  */
+const config = require("./../utils");
+const prefix = config.bot?.prefix || "!";
 const helpText = `
 Available commands:
-!hi    - Say hello
-!time  - Show current time
-!image - Send an image
-!poll  - Create a poll
-!ping  - Check bot response time
+${prefix}hi    - Say hello
+${prefix}time  - Show current time
+${prefix}image - Send an image
+${prefix}poll  - Create a poll
+${prefix}ping  - Check bot response time
 `;
 
 module.exports = {

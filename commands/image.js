@@ -14,7 +14,7 @@ module.exports = {
    */
   execute: async (sock, from, args) => {
     await sock.sendMessage(from, {
-      image: { url: "https://www.nexoscreator.tech/logo.png" },
+      image: { url: "https://www.nexoslabs.site/logo.png" },
       caption: "Here is an image!",
     });
   },

@@ -15,21 +15,35 @@ module.exports = {
    * @returns {Function}
    */
   handler: (sock, logger, commands) => async ({ messages }) => {
-    const msg = messages[0];
-    if (!msg.message || msg.key.fromMe) return;
-    const from = msg.key.remoteJid;
-    const text = msg.message.conversation || msg.message.extendedTextMessage?.text;
-    if (!text || !text.startsWith(prefix)) return;
-    logger.info(`Received command from ${from}: ${text}`);
-    const [cmdName, ...args] = text.slice(1).trim().split(" ");
-    const command = commands.get(cmdName.toLowerCase());
-    if (command) {
-      try {
-        await command.execute(sock, from, args);
-        logger.info(`Command executed: ${cmdName}`);
-      } catch (err) {
-        logger.error(`Command error (${cmdName}): ${err}`);
+    try {
+      const msg = messages[0];
+      if (!msg?.message || msg.key.fromMe) return;
+
+      const from = msg.key.remoteJid;
+      const text =
+        msg.message.conversation ||
+        msg.message.extendedTextMessage?.text ||
+        msg.message.imageMessage?.caption ||
+        msg.message.videoMessage?.caption;
+
+      if (!text || !text.startsWith(prefix)) return;
+      
+      logger.info("Received command", { from, text });
+      const [cmdName, ...args] = text.slice(prefix.length).trim().split(" ");
+      const command = commands.get(cmdName.toLowerCase());
+
+      if (!command) {
+        await sock.sendMessage(from, {
+          text: `Unknown command. Type ${prefix}help to see available commands.`,
+        });
+        logger.warn("Unknown command received", { from, cmdName });
+        return;
       }
+
+      await command.execute(sock, from, args);
+      logger.info("Command executed", { cmdName, from });
+    } catch (err) {
+      logger.error("Command handling failed", { error: err.message, stack: err.stack });
     }
   }
 };

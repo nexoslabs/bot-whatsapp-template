@@ -1,4 +1,3 @@
-
 # =====================
 # WhatsApp Bot Settings
 # =====================
@@ -16,6 +15,5 @@ logging:
   logToFile: true               # Save logs to file
 
 # =====================
-# Advanced/Experimental
-# =====================
 # Add more config options as needed
+# =====================

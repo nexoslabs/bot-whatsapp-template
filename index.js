@@ -10,13 +10,14 @@ const {
 const fs = require("fs");
 const path = require("path");
 const pino = require("pino");
-const config = require("./utils");
+const { createLogger, withRetry, ...config } = require("./utils");
 
 // Logging via pino
-const logger = pino({
-    level: config.logging?.level || "info",
-    transport: { target: "pino-pretty" }
+const baseLogger = pino({
+  level: config.logging?.level || "info",
+  transport: config.logging?.logToFile ? { target: "pino-pretty" } : undefined,
 });
+const logger = createLogger(baseLogger);
 
 /**
  * Loads all command modules from the commands directory.
@@ -45,36 +46,41 @@ for (const file of eventFiles) {
  * Starts the WhatsApp bot and registers event handlers.
  */
 async function startBot() {
-  const { state, saveCreds } = await useMultiFileAuthState("auth_info");
-  const { version, isLatest } = await fetchLatestBaileysVersion();
-  logger.info(`Using Baileys v${version.join(".")}, Latest: ${isLatest}`);
+  try {
+    const { state, saveCreds } = await withRetry(() => useMultiFileAuthState("auth_info"), { retries: 3, delayMs: 1000 });
+    const { version, isLatest } = await withRetry(() => fetchLatestBaileysVersion(), { retries: 3, delayMs: 1000 });
+    logger.info("Starting WhatsApp bot", { version: version.join("."), isLatest });
 
-  const sock = makeWASocket({
-    version,
-    auth: state,
-    printQRInTerminal: false,
-    logger: pino({ level: 'silent' }),
-    browser: ["NexosBot", "Opera GX", "120.0.5543.204"],
-    generateHighQualityLinkPreview: true,
-    markOnlineOnConnect: config.bot?.online || true,
-    syncFullHistory: config.bot?.history || false,
-    shouldSyncHistoryMessage: config.bot?.history || false,
-  });
+    const sock = makeWASocket({
+      version,
+      auth: state,
+      printQRInTerminal: false,
+      logger: pino({ level: "silent" }),
+      browser: ["NexosBot", "Opera GX", "120.0.5543.204"],
+      generateHighQualityLinkPreview: true,
+      markOnlineOnConnect: config.bot?.online || true,
+      syncFullHistory: config.bot?.history || false,
+      shouldSyncHistoryMessage: config.bot?.history || false,
+    });
 
   // Save login credentials on update
-  sock.ev.on("creds.update", saveCreds);
+    sock.ev.on("creds.update", saveCreds);
 
   // Register all event handlers
-  for (const { eventName, handler } of eventHandlers) {
+    for (const { eventName, handler } of eventHandlers) {
     // Pass only the dependencies that the handler expects
-    if (eventName === "connection.update") {
-      sock.ev.on(eventName, handler(sock, logger, saveCreds, startBot));
-    } else if (eventName === "messages.upsert") {
-      sock.ev.on(eventName, handler(sock, logger, commands));
-    } else {
+      if (eventName === "connection.update") {
+        sock.ev.on(eventName, handler(sock, logger, saveCreds, startBot));
+      } else if (eventName === "messages.upsert") {
+        sock.ev.on(eventName, handler(sock, logger, commands));
+      } else {
       // For future extensibility, just pass sock and logger
-      sock.ev.on(eventName, handler(sock, logger));
+        sock.ev.on(eventName, handler(sock, logger));
+      }
     }
+  } catch (error) {
+    logger.error("Failed to start bot", { error: error.message, stack: error.stack });
+    setTimeout(startBot, 5000);
   }
 }
 

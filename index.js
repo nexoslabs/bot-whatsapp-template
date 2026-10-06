@@ -66,15 +66,37 @@ async function startBot() {
   // Save login credentials on update
     sock.ev.on("creds.update", saveCreds);
 
+  // Si no está registrado, solicitar código de emparejamiento por número
+    if (!sock.authState.creds.registered) {
+      const args = process.argv.slice(2);
+      const pairingArgIndex = args.indexOf("--code");
+      let phoneNumber = pairingArgIndex !== -1 ? args[pairingArgIndex + 1] : null;
+
+      if (!phoneNumber) {
+        // O puedes escribir tu número directamente aquí entre las comillas si prefieres
+        phoneNumber = ""; 
+      }
+
+      if (phoneNumber) {
+        phoneNumber = phoneNumber.replace(/[^0-9]/g, "");
+        setTimeout(async () => {
+          try {
+            let code = await sock.requestPairingCode(phoneNumber);
+            console.log(`\n\x1b[32m[!] TU CÓDIGO DE VINCULACIÓN ES:\x1b[39m \x1b[36m${code}\x1b[39m\n`);
+          } catch (err) {
+            console.error("Error al solicitar el código de emparejamiento:", err);
+          }
+        }, 3000);
+      }
+    }
+
   // Register all event handlers
     for (const { eventName, handler } of eventHandlers) {
-    // Pass only the dependencies that the handler expects
       if (eventName === "connection.update") {
         sock.ev.on(eventName, handler(sock, logger, saveCreds, startBot));
       } else if (eventName === "messages.upsert") {
         sock.ev.on(eventName, handler(sock, logger, commands));
       } else {
-      // For future extensibility, just pass sock and logger
         sock.ev.on(eventName, handler(sock, logger));
       }
     }
